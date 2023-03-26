@@ -1,0 +1,33 @@
+#Create a Linux Debian-based VM with a minimum of 8GB of expandable storage
+#Change the network settings to bridged mode and mount the Open Media Vault ISO. 
+#Create extra expandable storage if needed or add detachable storage to your VM.
+#Select your UI/Keyboad/Repository language
+#Follow the installation UI
+#Choose a host/domain name
+#Set a root password
+#Select your main storage
+#reboot
+#looking with root credentials into CLI 
+ip addr
+#use the ip to go into the web UI
+#default credentials admin/openmediavault
+#go into system/workbench disable auto lock to avoid update errors
+#go into system/update update the repositories
+#create storage and sharefolder
+#storage/filesystem
+#storage/sharefolder/+/foldername/permission
+#Services/SMB/Settings/Enable
+#Services/SMB/Share
+#SSH into the OMV and install the extra repository
+#https://wiki.omv-extras.org/
+wget -O - https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/install | bash 
+#refresh the UI sytem/extra/install docker/install portainer
+#if any errors installing docker install apparmor
+#ssh
+apt install apparmor apparmor-utils auditd
+#if any errors installing portainer disable apparmor
+#ssh
+sudo mkdir -p /etc/default/grub.d
+echo 'GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT apparmor=0"' | sudo tee /etc/default/grub.d/apparmor.cfg
+sudo update-grub
+sudo reboot
